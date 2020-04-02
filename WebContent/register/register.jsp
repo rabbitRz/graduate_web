@@ -8,8 +8,8 @@
 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <title>注册界面</title>
 </head>
-<frameset cols="20%,80%">
- <frame src="Left_navigation_bar.jsp">
+<frameset cols="23%,*">
+ <frame src="Left_navigation_bar.html">
  <frame src="register_student.jsp" name="showframe">
 </frameset>
 <body>  

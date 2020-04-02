@@ -281,7 +281,7 @@
 <button type="button" class="btn btn-outline-success btn-lg" style="margin:cenetr;width:300px">查看更多</button>
 </div>
 </div>
-
+<jsp:include page="footer.jsp" flush="true"/>
 <script src="bootstrap/js/jquery-3.4.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
