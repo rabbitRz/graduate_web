@@ -23,34 +23,33 @@
     <p class="card-text">望您使用愉快！</p>
     
   <form>
-  <div class="form-group">
    <div class="form-group">
     <label for="inputAddress2">用户名</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+    <input type="text" class="form-control" id="username" name="username" placeholder="用户名唯一">
   </div>
     <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">密码</label>
-      <input type="password" class="form-control" id="inputEmail4" placeholder="Password">
+      <input type="password" class="form-control" id="password" name="password" placeholder="密码包含英文字母和数字">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">确认密码</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+      <input type="password" class="form-control" id="password" name="password" placeholder="">
     </div>
   </div>
   
   <div class="form-group">
     <label for="inputAddress2">姓名</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+    <input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名....">
   </div>
     <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">出生日期</label>
-      <input type="password" class="form-control" id="inputEmail4" placeholder="Password">
+      <input type="date" class="form-control" id="birth" placeholder="请输入出生日期....">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">性别</label>
-      <select id="inputState" class="form-control">
+      <select id="sex" name="sex" class="form-control">
         <option selected>Choose...</option>
         <option>男</option>
         <option>女</option>
@@ -59,18 +58,17 @@
   </div>
   <div class="form-group">
     <label for="inputAddress2">身份证号</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+    <input type="text" class="form-control" id="idcard" name="idcard" placeholder="请输入身份证号....">
   </div>
   <div class="form-group">
     <label for="inputAddress2">联系方式</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+    <input type="text" class="form-control" id="phone" name="phone" placeholder="请输入联系方式....">
   </div>
   <div class="form-group">
     <label for="inputAddress">电子邮箱</label>
-    <input type="email" class="form-control" id="inputAddress" placeholder="1234 Main St">
+    <input type="email" class="form-control" id="email" name="email" placeholder="请输入电子邮箱....">
   </div>
-  
-  <button type="submit" class="btn btn-primary">Sign in</button>
+  <button type="submit" class="btn btn-primary">注册</button>
   </form>
   </div>
 </div>
