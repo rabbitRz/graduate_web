@@ -22,8 +22,8 @@
     <p class="card-text">This is the interface for job seekers to register. After users fill in and submit, they can only register after being approved by the website administrator!</p>
     <p class="card-text">望您使用愉快！</p>
     
-  <form>
-   <div class="form-group">
+  <form method="post"  id="userFrom">
+   <div class="form-group" >
     <label for="inputAddress2">用户名</label>
     <input type="text" class="form-control" id="username" name="username" placeholder="用户名唯一">
   </div>
@@ -34,7 +34,7 @@
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">确认密码</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="">
+      <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="请再次确认密码">
     </div>
   </div>
   
@@ -45,12 +45,11 @@
     <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">出生日期</label>
-      <input type="date" class="form-control" id="birth" placeholder="请输入出生日期....">
+      <input type="date" class="form-control" id="birth" name="birth" placeholder="请输入出生日期....">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">性别</label>
       <select id="sex" name="sex" class="form-control">
-        <option selected>Choose...</option>
         <option>男</option>
         <option>女</option>
       </select>
@@ -68,7 +67,7 @@
     <label for="inputAddress">电子邮箱</label>
     <input type="email" class="form-control" id="email" name="email" placeholder="请输入电子邮箱....">
   </div>
-  <button type="submit" class="btn btn-primary">注册</button>
+  <button id="sub" type="submit" class="btn btn-primary">注册</button>
   </form>
   </div>
 </div>
@@ -78,5 +77,20 @@
 <script src="../bootstrap/js/jquery-3.4.1.min.js"></script>
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../bootstrap/js/bootstrap.js"></script>
+<script>
+	//当页面加载完成后执行。
+	$(function(){
+		$("#sub").click(function(){
+			//发送异步请求，到服务器后台进行部门的添加。
+			var formData = $("#userFrom").serialize();
+			//alert(formData);
+			$.post("../register",formData+"&role=stu",function(data){
+				log.i(data);
+				alert(data);
+			})
+		});
+	});
+	
+</script>
 </body>
 </html>

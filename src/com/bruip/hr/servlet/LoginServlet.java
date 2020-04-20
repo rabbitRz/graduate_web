@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.bruip.hr.bean.login_person;
-import com.bruip.hr.dao.LoginDao;
-import com.bruip.hr.dao.impl.LoginDaoImpl;
+import com.bruip.hr.bean.role;
+import com.bruip.hr.bean.user;
+import com.bruip.hr.dao.RoleDao;
+import com.bruip.hr.dao.UserDao;
+import com.bruip.hr.dao.impl.RoleDaoImpl;
+import com.bruip.hr.dao.impl.UserDaoImpl;
 import com.bruip.hr.web.common.exception.DataAccessException;
 
 /**
@@ -36,26 +39,30 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//设置字符编码
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
         //响应内容类型编码设置
         response.setContentType("text/html;charset=UTF-8");
 		String username=request.getParameter("username");
 		String pwd=request.getParameter("password");
 		String rem=request.getParameter("remember");
-		System.out.print(rem);
-		LoginDao dao=new LoginDaoImpl();
+		//System.out.print(pwd);
+		UserDao dao=new UserDaoImpl();
+		RoleDao dao1=new RoleDaoImpl();
 		boolean flag=false;
-		login_person lo=new login_person();
+		user u=new user();
+		int role_id = 0;
 		if(!"".equals(username)&&!"".equals(pwd)) {
 			try {
-				lo=dao.login(username, pwd);
-				if(lo.getId()>0)
+				u=dao.login(username, pwd);
+				role_id=dao.SelRoleId(u.getId());
+				//能够登录的情况，查找到数据且code为1
+				if(u.getId()>0&&u.getCode()==1)
 					flag=true;
 			} catch (DataAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		//记住密码
 		if("true".equals(rem)&&flag) {
 			Cookie ck1=new Cookie("remember",rem);
 			ck1.setMaxAge(60*6);
@@ -76,10 +83,16 @@ public class LoginServlet extends HttpServlet {
 				}
 			}
 		}
+		//System.out.print(role_id);
 		if(flag) {
-			HttpSession session=request.getSession();
-			session.setAttribute("login_person", lo);
-			response.sendRedirect("NewFile.html");
+			HttpSession session=request.getSession();			
+			session.setAttribute("login_user", u);
+			if(role_id==2)
+				response.sendRedirect("index.jsp");//求职者首页
+			else if(role_id==1)
+				response.sendRedirect("");//公司首页
+			else if(role_id==3)
+				response.sendRedirect("");//管理员首页
 		}
 		else {
 			response.getWriter().write("登陆失败！");

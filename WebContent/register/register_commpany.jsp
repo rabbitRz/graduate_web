@@ -22,7 +22,7 @@
     <p class="card-text">This is the interface for job seekers to register. After users fill in and submit, they can only register after being approved by the website administrator!</p>
     <p class="card-text">望您使用愉快！</p>
     
-  <form>
+  <form method="post" action="../register?role=com">
   <div class="form-group">
     <label for="inputAddress2">用户名</label>
     <input type="text" class="form-control" id="username" name="username" placeholder="用户名唯一">
@@ -34,7 +34,7 @@
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">确认密码</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="">
+      <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="">
     </div>
   </div>
   
@@ -45,12 +45,11 @@
     <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">出生日期</label>
-      <input type="date" class="form-control" id="birth" placeholder="请输入出生日期....">
+      <input type="date" class="form-control" id="birth" name="birth" placeholder="请输入出生日期....">
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">性别</label>
       <select id="sex" name="sex" class="form-control">
-        <option selected>Choose...</option>
         <option>男</option>
         <option>女</option>
       </select>
@@ -72,7 +71,7 @@
   <div class="form-row">
   <div class="form-group col-md-6">
       <label for="inputPassword4">公司统一信用代码</label>
-      <select id="inputState" class="form-control">
+      <select id="credit_code" name="credit_code" class="form-control">
         <option selected>Choose...</option>
         <option></option>
         <option></option>
@@ -80,7 +79,7 @@
     </div>
     <div class="form-group col-md-6">
       <label for="inputEmail4">职位</label>
-      <input type="password" class="form-control" id="inputEmail4" placeholder="Password">
+      <input type="text" class="form-control" id="position" name="position" placeholder="请输入职位....">
     </div>
   </div>
   <button type="submit" class="btn btn-primary">注册</button>
