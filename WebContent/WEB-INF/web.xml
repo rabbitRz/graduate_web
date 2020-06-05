@@ -29,4 +29,14 @@
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/RegisterServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>getAllCompanyCreditCodeServlet</display-name>
+    <servlet-name>getAllCompanyCreditCodeServlet</servlet-name>
+    <servlet-class>com.bruip.hr.servlet.getAllCompanyCreditCodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getAllCompanyCreditCodeServlet</servlet-name>
+    <url-pattern>/getAllCompanyCreditCodeServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -26,6 +26,7 @@ public class RoleDaoImpl implements RoleDao {
 			if(rs.next()) {
 				r.setId(rs.getInt("id"));
 				r.setRole_desc(rs.getString("role_desc"));
+				//System.out.print(r.getRole_desc());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -35,5 +36,13 @@ public class RoleDaoImpl implements RoleDao {
 		}
 		return r;
 	}
-
+public static void main(String args[]) {
+	RoleDaoImpl dao=new RoleDaoImpl();
+	try {
+		dao.SelRole(1);
+	} catch (DataAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 }
