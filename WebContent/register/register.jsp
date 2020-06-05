@@ -14,5 +14,8 @@
 </frameset>
 <body>  
 <h1 class="text-center">注册页面</h1>
+<script src="../bootstrap/js/jquery-3.4.1.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../bootstrap/js/bootstrap.js"></script>
 </body>
 </html>
