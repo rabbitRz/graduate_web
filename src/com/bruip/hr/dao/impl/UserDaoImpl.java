@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.jdt.internal.compiler.batch.Main;
 
 import com.bruip.hr.bean.user;
 import com.bruip.hr.dao.UserDao;
@@ -124,5 +128,47 @@ public class UserDaoImpl implements UserDao {
 		}
 		return flag;
 	}
-
+	//获取所有用户信息
+	public List<user> GetAllUser() throws DataAccessException {
+		// TODO Auto-generated method stub
+		Connection conn=DBUtils.getConnection();
+		String sql="select * from user";
+		PreparedStatement  st=null;
+		ResultSet rs=null;
+		List<user> list=new ArrayList<user>();
+		try {
+			st=conn.prepareStatement(sql);
+			rs=st.executeQuery();
+			while(rs.next()) {
+				user u=new user();
+				u.setBirth(rs.getString("birth"));
+				u.setCode(rs.getInt("code"));
+				u.setCredit_code(rs.getString("credit_code"));
+				u.setEmail(rs.getString("email"));
+				u.setId(rs.getInt("id"));
+				u.setId_card(rs.getString("id_card"));
+				u.setName(rs.getString("name"));
+				u.setPassword(rs.getString("password"));
+				u.setPhone(rs.getString("phone"));
+				u.setPosition(rs.getString("position"));
+				u.setSex(rs.getString("sex"));
+				u.setUsername(rs.getString("username"));
+				System.out.println(u);
+				list.add(u);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+public static void main(String[] args) {
+	UserDaoImpl daoImpl=new UserDaoImpl();
+	try {
+		daoImpl.GetAllUser();
+	} catch (DataAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+}
 }

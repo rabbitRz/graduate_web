@@ -106,13 +106,17 @@
 	{ 
 		 window.open("../login.html") 
 	}
+	//获取所有用户名
+	$.getJSON("..\AllUserName",function(data){
+		alert(data);
+	});
 	//当页面加载完成后执行。
 	$(function(){
 		$.getJSON("../AllCreditCode",function(data){
 		$(data).each(function(index,item){		
 		    $("select[name='credit_code']").append("<option value='"+item.credit_code+"'>"+item.credit_code+"</option>");
 		});
-			
+		
 			$("#sub").click(function(){
 				//发送异步请求，到服务器后台进行部门的添加。
 				var formData = $("#UserFrom").serialize();

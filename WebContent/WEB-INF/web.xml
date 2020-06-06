@@ -39,4 +39,14 @@
     <servlet-name>getAllCompanyCreditCodeServlet</servlet-name>
     <url-pattern>/getAllCompanyCreditCodeServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetAllUserName</display-name>
+    <servlet-name>GetAllUserName</servlet-name>
+    <servlet-class>com.bruip.hr.servlet.GetAllUserName</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllUserName</servlet-name>
+    <url-pattern>/GetAllUserName</url-pattern>
+  </servlet-mapping>
 </web-app>
