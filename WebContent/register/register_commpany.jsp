@@ -30,7 +30,7 @@
     <p class="card-text">This is the interface for job seekers to register. After users fill in and submit, they can only register after being approved by the website administrator!</p>
     <p class="card-text">望您使用愉快！</p>
     
-  <form method="post" action="" id="UserForm">
+  <form action="" id="userFrom">
   <div class="form-group">
     <label for="inputAddress2">用户名</label>
     <input type="text" class="form-control" id="username" name="username" placeholder="用户名唯一">
@@ -101,15 +101,11 @@
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../bootstrap/js/bootstrap.js"></script>
 <script>
-//返回登录界面
+	//返回登录界面
 	function replace() 
 	{ 
-		 window.open("../login.html") 
+		 window.open("../login.html"); 
 	}
-	//获取所有用户名
-	$.getJSON("..\AllUserName",function(data){
-		alert(data);
-	});
 	//当页面加载完成后执行。
 	$(function(){
 		$.getJSON("../AllCreditCode",function(data){
@@ -119,7 +115,7 @@
 		
 			$("#sub").click(function(){
 				//发送异步请求，到服务器后台进行部门的添加。
-				var formData = $("#UserFrom").serialize();
+				var formData = $("#userFrom").serialize();
 				var pw1=document.getElementById("password");
 				var pw2=document.getElementById("confirm_password");
 				if($("#username").val()==""||$("#username").val()==null){
@@ -138,16 +134,14 @@
 					alert("联系方式不可以为空!");
 				}else if($("#email").val()==""||$("#email").val()==null){
 					alert("电子邮箱不可以为空!");
-				}else if($("#credit_code").val()==""||$("#credit_code").val()==null){
-					alert("公司统一信用代码不可以为空!");
 				}else if($("#position").val()==""||$("#position").val()==null){
 					alert("职位不可以为空!");
 				}
-				else {
-				alert(formData);
+				else{
+				//alert(formData);
 				$.post("../reg",formData+"&role=com",function(data){
 					alert(data);
-				})
+				});
 				}
 			});
 		});

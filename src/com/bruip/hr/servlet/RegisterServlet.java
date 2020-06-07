@@ -2,6 +2,8 @@ package com.bruip.hr.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,6 +58,11 @@ public class RegisterServlet extends HttpServlet {
 		//客户端响应
 		PrintWriter pw = response.getWriter();
 		response.setContentType("text/html");
+		UserDao dao=new UserDaoImpl();
+		boolean flag=false;
+		//用户名不存在
+		boolean exist=true;
+		//查看用户名是否存在		
 		user u=new user();
 		u.setBirth(birth);
 		u.setCode(0);
@@ -66,36 +73,47 @@ public class RegisterServlet extends HttpServlet {
 		u.setPhone(phone);
 		u.setSex(sex);
 		u.setUsername(username);
-		//System.out.print(u+"\n"+ro+"\n");
-		UserDao dao=new UserDaoImpl();
-		boolean flag=false;
+		//System.out.println(username+"\n");
+		//System.out.print(u+"\n"+ro+"\n");		
+		List<user> list=new ArrayList<user>();
+		try {
+			list=dao.GetAllUser();
+		} catch (DataAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(int i=0;i<list.size();i++) {
+			if(list.get(i).getUsername().equals(username)&&list.get(i).getUsername()!=""
+					&&list.get(i).getUsername()!=null) {
+				exist=false;
+				//System.out.println("结果:"+list.get(i).getUsername()+"\n");
+				break;
+			}
+		}
+		//System.out.println("结果:"+exist+"\n");
+		if(exist) {
 		if(ro.equals("com")) {
 			//招聘者注册
 			String credit_code=request.getParameter("credit_code");
 			String position=request.getParameter("position");
 			u.setCredit_code(credit_code);
 			u.setPosition(position);
-			try {
-				flag=dao.register(u, ro);
-			} catch (DataAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				pw.println("注册失败!");
-			}
 		}else if(ro.equals("stu")) {
 			//求职者注册
-			try {
-				flag=dao.register(u, ro);
-			} catch (DataAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();				
-				pw.println("注册失败!");
-				pw.flush();
-				pw.close();
-			}
+		}
+		try {
+			flag=dao.register(u, ro);
+			pw.println("请等待审核，审核通过方可登录！");
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			pw.println("注册失败!");
+			e.printStackTrace();
 		}
 		System.out.print("插入结果："+flag+"\n");
-		pw.println("请等待审核，审核通过方可登录！");
+		}
+		else {
+			pw.println("用户已存在！注册失败");
+		}
 		pw.flush();
 		pw.close();
 		

@@ -89,7 +89,7 @@
 //返回登录界面
 	function replace() 
 	{ 
-		 window.open("../login.html") 
+		 window.open("../login.html");
 	}
 	//当页面加载完成后执行。
 	$(function(){
@@ -117,7 +117,7 @@
 				alert("电子邮箱不可以为空!");
 			}
 			else {
-			alert(formData);
+			//alert(formData);
 			$.post("../reg",formData+"&role=stu",function(data){
 				alert(data);
 			})

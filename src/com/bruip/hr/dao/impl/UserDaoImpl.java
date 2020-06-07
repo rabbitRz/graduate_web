@@ -153,7 +153,7 @@ public class UserDaoImpl implements UserDao {
 				u.setPosition(rs.getString("position"));
 				u.setSex(rs.getString("sex"));
 				u.setUsername(rs.getString("username"));
-				System.out.println(u);
+				//System.out.println(u);
 				list.add(u);
 			}
 		} catch (SQLException e) {
