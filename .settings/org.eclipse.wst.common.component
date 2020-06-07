@@ -2,7 +2,7 @@
     <wb-module deploy-name="graduate_web">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="graduate_web"/>
         <property name="java-output-path" value="/graduate_web/build/classes"/>
+        <property name="context-root" value="graduate_web"/>
     </wb-module>
 </project-modules>

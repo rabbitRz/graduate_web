@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.batch.Main;
-
 import com.bruip.hr.bean.user;
 import com.bruip.hr.dao.UserDao;
 import com.bruip.hr.web.common.exception.DataAccessException;

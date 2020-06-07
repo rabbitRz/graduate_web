@@ -49,4 +49,14 @@
     <servlet-name>GetAllUserName</servlet-name>
     <url-pattern>/GetAllUserName</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmailServlet</display-name>
+    <servlet-name>EmailServlet</servlet-name>
+    <servlet-class>com.bruip.hr.servlet.EmailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmailServlet</servlet-name>
+    <url-pattern>/EmailServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
