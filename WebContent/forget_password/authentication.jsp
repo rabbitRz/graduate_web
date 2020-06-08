@@ -27,11 +27,16 @@
 </nav>
 <div class="container" style="position:relative;top:100px">
 <form id="form0" name="form0" AUTOCOMPLETE="OFF">
-
+<div class="form-group">	
+	
+ 	<label for="exampleInputEmail1">账号用户名</label>
+    <input type="text" name="username" id="username" class="form-control" placeholder="请输入需要重置密码的用户名">
+	<div id="mes" class="form-text text-muted" style="color:red"></div>
+  </div>
   <div class="form-group">
     <label for="exampleInputEmail1">邮箱</label>
     <div class="input-group mb-3">
-  	<input type="email" id="email" name="email" class="form-control" placeholder="你可以输入账户电子邮箱获取验证码" >
+  	<input name="email" type="email" id="email"  class="form-control" placeholder="你可以输入账户电子邮箱获取验证码" >
   	<div class="input-group-append">
     <button class="btn btn-outline-secondary" id="btnGetVcode" style="cursor:pointer" type="button">发送验证码</button>
   	</div>    
@@ -42,7 +47,7 @@
 	
  	<label for="exampleInputEmail1">验证码</label>
     <input type="text" name="vcode" id="vcode" class="form-control" placeholder="请输入邮件中获取的验证码">
-
+	<div id="message" class="form-text text-muted" style="color:red"></div>
   </div>
   <button type="button" class="btn btn-primary" id="btnVerify" style="cursor:pointer">验证</button>
 </form>
@@ -61,6 +66,7 @@
   $(document).ready(function(){
 	  //获取验证码按钮
 	  $("#btnGetVcode").click(function() {
+		  
 			var btnGet = document.getElementById("btnGetVcode");
 			btnGet.disabled = true;  // 为了防止多次点击
 			$.ajax({
@@ -85,8 +91,10 @@
 		// 验证按钮
 		$("#btnVerify").click(function() {
 			var message = document.getElementById("message");  // 显示提示信息
+			var username=document.getElementById("username");//账户
+			var email=document.getElementById("email");//邮箱
 			$.ajax({
-				url: 'EmailServlet?method=verify',
+				url: '../EmailServlet?method=verify',
 				type: 'post',
 				data: {vcode: $("input[name='vcode']").val()},
 				dataType: 'text',
@@ -94,10 +102,13 @@
 					if(msg == 1){
 						message.innerHTML = "验证码正确！";
 						$("#message").css("color","green");
+						alert("验证码正确！");
+						window.location("ModifyPwd.jsp?username="+username.value+"&email="+email.value);
 					}
 					else{
 						message.innerHTML = "验证码错误！";
 						$("#message").css("color","red");
+						alert("验证码错误！");
 					}
 				},
 				error:function(msg){

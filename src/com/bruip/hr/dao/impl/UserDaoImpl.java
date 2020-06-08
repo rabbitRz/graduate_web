@@ -66,6 +66,8 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			DBUtils.close(rs, st, conn);
 		}
 		return role_id;
 	}
@@ -87,6 +89,8 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			DBUtils.close(rs, st, conn);
 		}
 		return max;
 	}
@@ -157,16 +161,73 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			DBUtils.close(rs, st, conn);
 		}
 		return list;
 	}
+//根据用户名查看信息是否正确,0表示完全相同，1表示email不同，2表示name不同，3表示idcard
+@Override
+public int CheckUserByUsername(String username, String email, String name, String idcard)
+		throws DataAccessException {
+	// TODO Auto-generated method stub
+	Connection connection=DBUtils.getConnection();
+	String sql="select email,name,id_card from user where username="+username;
+	PreparedStatement st=null;
+	ResultSet rs=null;
+	int flag=0;
+	try {
+		st=connection.prepareStatement(sql);
+		rs=st.executeQuery();
+		if(rs.next()) {
+			if(!email.equals(rs.getString("email"))) {
+				flag=1;
+			}else if(!name.equals(rs.getString("name"))) {
+				flag=2;
+			}else if(!idcard.equals(rs.getString("id_card"))) {
+				flag=3;
+			}
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally {
+		DBUtils.close(rs, st, connection);
+	}
+	return flag;
+}
+//重置密码
+@Override
+public boolean ModifyPassword(String username,String password,String email) throws DataAccessException {
+	// TODO Auto-generated method stub
+	Connection conn=DBUtils.getConnection();
+	String sql="update user set password='"+password+"',email='"+email+"' where username="+username;
+	PreparedStatement st=null;
+	int rs=0;
+	boolean flag=false;
+	try {
+		st=conn.prepareStatement(sql);
+		rs=st.executeUpdate();
+		if(rs==1)
+			flag=true;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally {
+		DBUtils.close(null, st,conn);
+	}
+	return flag;
+}
 public static void main(String[] args) {
 	UserDaoImpl daoImpl=new UserDaoImpl();
 	try {
-		daoImpl.GetAllUser();
+		//daoImpl.GetAllUser();
+		System.out.println("查询结果："+daoImpl.CheckUserByUsername("2", "2780085719@qq.com", "2", "2")+"\n");
+		System.out.println("重置密码结果："+daoImpl.ModifyPassword("2", "22","2780085719@qq.com"));
 	} catch (DataAccessException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	
 }
 }

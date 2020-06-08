@@ -14,4 +14,8 @@ public interface UserDao {
 	boolean register(user u,String rol) throws DataAccessException;
 	//获取所有用户信息
 	List<user> GetAllUser() throws DataAccessException;
+	//根据用户名查看信息是否正确,0表示完全相同，1表示email不同，2表示name不同，3表示idcard不同
+	int CheckUserByUsername(String username,String email,String name,String idcard) throws DataAccessException;
+	//重置密码
+	boolean ModifyPassword(String username,String password,String email) throws DataAccessException;
 }
