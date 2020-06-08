@@ -103,7 +103,7 @@
 						message.innerHTML = "验证码正确！";
 						$("#message").css("color","green");
 						alert("验证码正确！");
-						window.location("ModifyPwd.jsp?username="+username.value+"&email="+email.value);
+						 window.location.href="ModifyPwd.jsp?username="+username.value+"&email="+email.value;
 					}
 					else{
 						message.innerHTML = "验证码错误！";
