@@ -25,11 +25,45 @@
   </select>
   </div>
   <div class="col-auto">
-  <a>
+   <!-- Button trigger modal -->
+  <button class="btn btn-outline-light" id="allCites" data-toggle="modal" data-target="#exampleModal">
   <svg class="bi bi-map" width="32" height="32" viewBox="0 0 16 16" fill="green" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" d="M15.817.613A.5.5 0 0 1 16 1v13a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 14.51l-4.902.98A.5.5 0 0 1 0 15V2a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0l4.902.98 4.902-.98a.5.5 0 0 1 .415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z"/>
  </svg>
- </a>
+ </button>
+ <!-- Modal -->
+ <div class="modal fade bd-example-modal-xl" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">全部城市</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <nav class="nav nav-pills flex-column flex-sm-row bg-light">
+  		<a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab" role="tab" aria-controls="A" href="#A">ABCDE</a>
+  		<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" role="tab" aria-controls="F" href="#F">FGHIJ</a>
+  		<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" role="tab" aria-controls="K" href="#K">KLMNO</a>
+  		<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" role="tab" aria-controls="P" href="#P">PQRST</a>
+  		<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" role="tab" aria-controls="W" href="#W">WXYZ</a>
+	  </nav>
+	  <div class="tab-content" id="nav-tabContent" style="position:relative;top:15px">
+  		<div class="tab-pane fade show active" id="A" role="tabpanel" aria-labelledby="nav-home-tab"></div>
+  		<div class="tab-pane fade" id="F" role="tabpanel" aria-labelledby="nav-profile-tab"></div>
+  		<div class="tab-pane fade" id="K" role="tabpanel" aria-labelledby="nav-contact-tab"></div>
+  		<div class="tab-pane fade" id="P" role="tabpanel" aria-labelledby="nav-contact-tab"></div>
+  		<div class="tab-pane fade" id="W" role="tabpanel" aria-labelledby="nav-contact-tab"></div>
+	  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+ </div>
  </div>
   <div class="col-auto">
 <label for="inputEmail3" class=" col-form-label">行业类型</label>
@@ -53,7 +87,8 @@
   <option value="3">Three</option>
   </select>
   </div>
-  <div class="col-auto "><button type="button" class="btn btn-success">
+  <div class="col-auto ">
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
   <div class="mx-auto" style="width:100px;">
   <svg class="bi bi-search" width="2em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
@@ -61,7 +96,8 @@
   </svg>
   <font style="position:relative;left:5px">查找</font>
   </div>
-  </button></div>
+  </button>
+  </div>
 </div>
 </div>
 </div>
@@ -128,15 +164,133 @@
     </div>
 </div>
 </div>
-  	
-</div>
 </div>
 </div>
 <script src="../../bootstrap/js/jquery-3.4.1.min.js"></script>
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <script src="../../bootstrap/js/bootstrap.js"></script>
 <script>
+$(function(){
+	$('#exampleModal').on('show.bs.modal', function (e) {
+		$.getJSON("../../PythonFiles/AllCites.txt",function(data){
+		   console.info(data);
+           var r="";
+           for(var k=0;k<5;k++){
+         	var dataName=data[k]["name"];
+         	console.info("1"+dataName);
+           for(var i = 0;i<dataName.length;i+=5){
+        	   var s=data[k]["firstChar"];
+        	   if(i>0)
+        		   s=" ";
+        	   r+="<div class='row' style='position:relative;top:20px'>"
+                	+"<div class='col' style='font-size:20px;' >"
+                	+"<p class='text-success text-lg-center' >"+s+"</div>";
+               //cnt=0;
+               for(var st=0;st<5;st++){
+            	var ty=" ";
+            	if(i+st<dataName.length)
+            		ty=dataName[st+i];
+               	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+               	//cnt++;
+               }
+               r+="</div>";
+               //console.log("次数："+cnt+dataName[i]);
+            }
+           }
+            $("#A").append(r);
+    	
+    		var r="";
+            for(var k=5;k<9;k++){
+          	var dataName=data[k]["name"];
+            for(var i = 0;i<dataName.length;i+=5){
+         	   var s=data[k]["firstChar"];
+         	   if(i>0)
+         		   s=" ";
+         	   r+="<div class='row' style='position:relative;top:20px'>"
+                 	+"<div class='col' style='font-size:20px;' >"
+                 	+"<p class='text-success text-lg-center' >"+s+"</div>";
+                for(var st=0;st<5;st++){
+             	var ty=" ";
+             	if(i+st<dataName.length)
+             		ty=dataName[st+i];
+                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+                }
+                r+="</div>";
+             }
+            }
+             $("#F").append(r);
+    		
+     		var r="";
+            for(var k=9;k<13;k++){
+          	var dataName=data[k]["name"];
+            for(var i = 0;i<dataName.length;i+=5){
+         	   var s=data[k]["firstChar"];
+         	   if(i>0)
+         		   s=" ";
+         	   r+="<div class='row' style='position:relative;top:20px'>"
+                 	+"<div class='col' style='font-size:20px;' >"
+                 	+"<p class='text-success text-lg-center' >"+s+"</div>";
+                for(var st=0;st<5;st++){
+             	var ty=" ";
+             	if(i+st<dataName.length)
+             		ty=dataName[st+i];
+                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+                }
+                r+="</div>";
+             }
+            }
+             $("#K").append(r);
+     		
+     		var r="";
+            for(var k=13;k<18;k++){
+          	var dataName=data[k]["name"];
+            for(var i = 0;i<dataName.length;i+=5){
+         	   var s=data[k]["firstChar"];
+         	   if(i>0)
+         		   s=" ";
+         	   r+="<div class='row' style='position:relative;top:20px'>"
+                 	+"<div class='col' style='font-size:20px;' >"
+                 	+"<p class='text-success text-lg-center' >"+s+"</div>";
+                for(var st=0;st<5;st++){
+             	var ty=" ";
+             	if(i+st<dataName.length)
+             		ty=dataName[st+i];
+                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+                }
+                r+="</div>";
+             }
+            }
+             $("#P").append(r);
+     		
+     		var r="";
+            for(var k=18;k<22;k++){
+          	var dataName=data[k]["name"];
+            for(var i = 0;i<dataName.length;i+=5){
+         	   var s=data[k]["firstChar"];
+         	   if(i>0)
+         		   s=" ";
+         	   r+="<div class='row' style='position:relative;top:20px'>"
+                 	+"<div class='col' style='font-size:20px;' >"
+                 	+"<p class='text-success text-lg-center' >"+s+"</div>";
+                for(var st=0;st<5;st++){
+             	var ty=" ";
+             	if(i+st<dataName.length)
+             		ty=dataName[st+i];
+                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+                }
+                r+="</div>";
+             }
+            }
+             $("#W").append(r);
+		});
+    		
 
+
+	$("#getAllCites").click(function(){
+		
+	});
+});
+});
 </script>
 </body>
 </html>
