@@ -17,11 +17,11 @@
 <label for="inputEmail3" class=" col-form-label">公司地点</label>
 </div>
   <div class="col-2">
-  <select class="custom-select">
+  <select class="custom-select" name="citesInfo">
   <option selected>全部</option>
-  <option value="1">北京</option>
-  <option value="2">上海</option>
-  <option value="3">天津</option>
+  <option value="北京">北京</option>
+  <option value="上海">上海</option>
+  <option value="天津">天津</option>
   </select>
   </div>
   <div class="col-auto">
@@ -69,22 +69,26 @@
 <label for="inputEmail3" class=" col-form-label">行业类型</label>
 </div>
   <div class="col-2">
-  <select class="custom-select">
-  <option selected>全部</option>
+  <select class="custom-select" name="enterprises">
+  <option selected>不限</option>
+  <!--
   <option value="1">One</option>
   <option value="2">Two</option>
-  <option value="3">Three</option>
+  <option value="3">Three</option>  -->
   </select>
   </div>
   <div class="col-auto">
 <label for="inputEmail3" class=" col-form-label">公司规模</label>
 </div>
   <div class="col-2">
-  <select class="custom-select">
-  <option selected>全部</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+  <select class="custom-select" name="total_people">
+  <option selected>不限</option>
+  <option value="1">0-20人</option>
+  <option value="2">20-99人</option>
+  <option value="3">100-499人</option>
+  <option value="4">500-999人</option>
+  <option value="5">1000-9999人</option>
+  <option value="6">10000人以上</option>
   </select>
   </div>
   <div class="col-auto ">
@@ -103,67 +107,7 @@
 </div>
 
 <div class="card" style="position:relative;top:30px">
- <div class="card-body">
-
-<div class="card-deck">
-
- <div class="card mb-auto" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="https://img.bosszhipin.com/beijin/logo/0e0d441a2f93a236536f20e8277bf4dbbe1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_120,limit_0" class="rounded float-middle" 
-      style="display: table-cell;" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">百度</h5>
-        <p class="card-text">已上市</p>
-        <p class="card-text"><small class="text-muted">需要职位</small></p>
-      </div>
-    </div>
-  </div>
-   <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
-    </div>
-</div>
-
-   <div class="card mb-auto" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="https://img.bosszhipin.com/beijin/logo/0e0d441a2f93a236536f20e8277bf4dbbe1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_120,limit_0" class="rounded float-middle" 
-      style="display: table-cell;" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">百度</h5>
-        <p class="card-text">已上市</p>
-        <p class="card-text"><small class="text-muted">需要职位</small></p>
-      </div>
-    </div>
-  </div>
-   <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
-    </div>
-</div>
-
-   <div class="card mb-auto" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="https://img.bosszhipin.com/beijin/logo/0e0d441a2f93a236536f20e8277bf4dbbe1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_120,limit_0" class="rounded float-middle" 
-      style="display: table-cell;" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">百度</h5>
-        <p class="card-text">已上市</p>
-        <p class="card-text"><small class="text-muted">需要职位</small></p>
-      </div>
-    </div>
-  </div>
-   <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
-    </div>
-</div>
-</div>
+ <div class="card-body"  id="AllCompany">
 </div>
 </div>
 <script src="../../bootstrap/js/jquery-3.4.1.min.js"></script>
@@ -171,6 +115,42 @@
 <script src="../../bootstrap/js/bootstrap.js"></script>
 <script>
 $(function(){
+	$.getJSON("../../EnterpriseKindServlet",function(data){
+    	console.info(data);
+    	$(data).each(function(index,item){
+    		$("select[name='enterprises']").append("<option value="+item.enterprise+">"+item.enterprise+"</option>");
+    	});
+    });
+	$.getJSON("../../Tr",function(data){
+		console.log(data);
+		for(var i=0;i<data.length;i+=3){
+			var str='<div class="row">'
+			for(var j=0;j<3&&i+j<data.length;j++){
+			item=data[i+j];
+			str+='<div class="col-sm-4"><div class="card mb-4" >'
+			  +'<div class="row no-gutters">'
+			  +'<div class="col-md-4">'
+			  +'<img src="'+item.icon+'" class="rounded float-middle"' 
+			  +'style="display: table-cell;" alt="...">'
+			  +'</div>'
+			  +'<div class="col-md-8">'
+			  +'<div class="card-body">'
+			  +'<a href="#"><h5 class="card-title" name="company_name" >'+item.name+'</h5></a>'
+			  +'<p class="card-text">'+item.enterprises+'</p>'
+			  +'<p class="card-text"><small class="text-muted">'+item.total_value+'元</small></p>'
+			  +'</div>'
+			  +'</div>'
+			  +'</div>'
+			  +'<div class="card-footer">'
+			  +'<small class="text-muted">'+item.build_time+'</small>'
+			  +'</div>'
+			  +'</div></div>';
+			}
+			str+="</div>"
+			$("#AllCompany").append(str);
+		}
+	});
+	
 	$('#exampleModal').on('show.bs.modal', function (e) {
 		$.getJSON("../../PythonFiles/AllCites.txt",function(data){
 		   console.info(data);
@@ -185,16 +165,14 @@ $(function(){
         	   r+="<div class='row' style='position:relative;top:20px'>"
                 	+"<div class='col' style='font-size:20px;' >"
                 	+"<p class='text-success text-lg-center' >"+s+"</div>";
-               //cnt=0;
+               
                for(var st=0;st<5;st++){
             	var ty=" ";
             	if(i+st<dataName.length)
             		ty=dataName[st+i];
-               	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
-               	//cnt++;
+            		r+="<div class='col-2' style='font-size:17px;'><p><a href='#' name='cites' class='text-lg-center text-muted' >"+ty+"</a></div>";
                }
                r+="</div>";
-               //console.log("次数："+cnt+dataName[i]);
             }
            }
             $("#A").append(r);
@@ -213,7 +191,7 @@ $(function(){
              	var ty=" ";
              	if(i+st<dataName.length)
              		ty=dataName[st+i];
-                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+             		r+="<div class='col-2' style='font-size:17px;'><p><a href='#' name='cites' class='text-lg-center text-muted' >"+ty+"</a></div>";
                 }
                 r+="</div>";
              }
@@ -234,7 +212,7 @@ $(function(){
              	var ty=" ";
              	if(i+st<dataName.length)
              		ty=dataName[st+i];
-                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+             		r+="<div class='col-2' style='font-size:17px;'><p><a href='#' name='cites' class='text-lg-center text-muted' >"+ty+"</a></div>";
                 }
                 r+="</div>";
              }
@@ -255,7 +233,7 @@ $(function(){
              	var ty=" ";
              	if(i+st<dataName.length)
              		ty=dataName[st+i];
-                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+             		r+="<div class='col-2' style='font-size:17px;'><p><a href='#' name='cites' class='text-lg-center text-muted' >"+ty+"</a></div>";
                 }
                 r+="</div>";
              }
@@ -276,16 +254,22 @@ $(function(){
              	var ty=" ";
              	if(i+st<dataName.length)
              		ty=dataName[st+i];
-                	r+="<div class='col-2' style='font-size:17px;'><p class='text-lg-center' >"+ty+"</div>";
+                	r+="<div class='col-2' style='font-size:17px;'><p><a href='#' name='cites' class='text-lg-center text-muted' >"+ty+"</a></div>";
                 }
                 r+="</div>";
              }
             }
              $("#W").append(r);
 		});
-    		
-
-
+    //添加下拉列表
+    $(document).on('click', 'a[name="cites"]', function(e){
+    	var text=$(e.target).text();
+    	$('#exampleModal').modal('hide');
+    	//console.log(text);
+    	$("select[name='citesInfo']").append('<option value='+text+' selected>'+text+'</option>')
+    })
+	
+	
 	$("#getAllCites").click(function(){
 		
 	});

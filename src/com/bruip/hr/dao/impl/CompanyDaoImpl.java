@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bruip.hr.bean.company;
+import com.bruip.hr.bean.enterprise_kind;
 import com.bruip.hr.dao.CompanyDao;
 import com.bruip.hr.web.common.exception.DataAccessException;
 import com.bruip.hr.web.common.utils.DBUtils;
@@ -48,13 +49,43 @@ public class CompanyDaoImpl implements CompanyDao   {
 		}
 		return list;
 	}
-public static void main(String args[]){
-		CompanyDaoImpl dao=new CompanyDaoImpl();
+	//查看所有行业类型的信息
+	@Override
+	public List<enterprise_kind> getAllEnterprise_kinds() throws DataAccessException {
+		// TODO Auto-generated method stub
+		List<enterprise_kind> list=new ArrayList<enterprise_kind>();
+		Connection conn=DBUtils.getConnection();
+		String sql="select * from enterprise_kind ORDER BY id asc";
+		PreparedStatement st=null;
+		ResultSet rs=null;
 		try {
-			dao.GetAllCompany();
+			st=conn.prepareStatement(sql);
+			rs=st.executeQuery();
+			while (rs.next()) {
+				enterprise_kind en=new enterprise_kind();
+				en.setEnterprise(rs.getString("enterprise"));
+				en.setId(rs.getInt("id"));
+				list.add(en);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtils.close(rs, st, conn);
+		}
+		return list;
+	}	
+	public static void main(String args[]){
+		CompanyDaoImpl dao=new CompanyDaoImpl();
+		List<enterprise_kind> list=new ArrayList<enterprise_kind>();
+		try {
+			//dao.GetAllCompany();
+			list=dao.getAllEnterprise_kinds();
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-}	
+		for(int i=0;i<list.size();i++)
+			System.out.println(list.get(i));
+	}
 }
