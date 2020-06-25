@@ -11,5 +11,7 @@ public interface CompanyDao {
 	public List<company> GetAllCompany() throws DataAccessException;
 	//查看所有行业类型的信息
 	public List<enterprise_kind> getAllEnterprise_kinds() throws DataAccessException;
-}
+	//根据公司地点查找符合公司的信息
+	//根据行业类型查找
+}    
 

@@ -92,7 +92,7 @@
   </select>
   </div>
   <div class="col-auto ">
-  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+  <button type="button" class="btn btn-success" onclick="LoadHtml()">
   <div class="mx-auto" style="width:100px;">
   <svg class="bi bi-search" width="2em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
@@ -113,6 +113,40 @@
 <script src="../../bootstrap/js/jquery-3.4.1.min.js"></script>
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <script src="../../bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+//查找
+function LoadHtml(){
+	$.getJSON("../../Fc",function(data){
+		console.log(data);
+		for(var i=0;i<data.length;i+=3){
+			var str='<div class="row">'
+			for(var j=0;j<3&&i+j<data.length;j++){
+			item=data[i+j];
+			str+='<div class="col-sm-4"><div class="card mb-4" >'
+			  +'<div class="row no-gutters">'
+			  +'<div class="col-md-4">'
+			  +'<img src="'+item.icon+'" class="rounded float-middle"' 
+			  +'style="display: table-cell;" alt="...">'
+			  +'</div>'
+			  +'<div class="col-md-8">'
+			  +'<div class="card-body">'
+			  +'<a href="#" class="text-dark"><h5 class="card-title" name="company_name" >'+item.name+'</h5></a>'
+			  +'<p class="card-text">'+item.enterprises+'</p>'
+			  +'<p class="card-text"><small class="text-muted">'+item.total_value+'元</small></p>'
+			  +'</div>'
+			  +'</div>'
+			  +'</div>'
+			  +'<div class="card-footer">'
+			  +'<small class="text-muted">'+item.build_time+'</small>'
+			  +'</div>'
+			  +'</div></div>';
+			}
+			str+="</div>"
+			$("#AllCompany").append(str);
+		}
+	});
+}
+</script>
 <script>
 $(function(){
 	$.getJSON("../../EnterpriseKindServlet",function(data){
@@ -135,7 +169,7 @@ $(function(){
 			  +'</div>'
 			  +'<div class="col-md-8">'
 			  +'<div class="card-body">'
-			  +'<a href="#"><h5 class="card-title" name="company_name" >'+item.name+'</h5></a>'
+			  +'<a href="#" class="text-dark"><h5 class="card-title" name="company_name" >'+item.name+'</h5></a>'
 			  +'<p class="card-text">'+item.enterprises+'</p>'
 			  +'<p class="card-text"><small class="text-muted">'+item.total_value+'元</small></p>'
 			  +'</div>'
