@@ -309,11 +309,7 @@ $(function(){
     	//console.log(text);
     	$("select[name='place']").append('<option value='+text+' selected>'+text+'</option>')
     })
-	
-	
-	$("#getAllCites").click(function(){
-		
-	});
+
 });
 });
 </script>
