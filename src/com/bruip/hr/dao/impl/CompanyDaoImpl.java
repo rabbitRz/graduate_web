@@ -75,17 +75,100 @@ public class CompanyDaoImpl implements CompanyDao   {
 		}
 		return list;
 	}	
+	@Override
+	//根据公司地点、行业类型、公司规模查找符合公司的信息
+	public List<company> findCompanies(String place,String enterprise,String min,String max) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Connection conn=DBUtils.getConnection();
+		String sql="select * from company";
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		boolean flag=false;
+		List<company> list=new ArrayList<company>();
+		if(place!=""&&place!=null) {
+			if(!flag)
+				sql+=" where ";
+			sql+="address like '%"+place+"%'";
+			flag=true;
+		}
+		if(enterprise!=""&&enterprise!=null) {
+			if(!flag)
+				sql+=" where ";
+			else {
+				sql+=" and ";
+			}
+			sql+="enterprise='"+enterprise+"'";
+			flag=true;
+		}
+		if(min!=""&&min!=null) {
+			if(!flag)
+				sql+=" where ";
+			else {
+				sql+=" and ";
+			}
+			if(min=="10000")
+				sql+="total_people >="+min;
+			else
+				sql+="total_people between "+min+" and "+max;
+			flag=true;
+		}
+		System.out.println(sql);
+		try {
+			st=conn.prepareStatement(sql);
+			rs=st.executeQuery();
+			while(rs.next()) {
+				company com=new company();
+				com.setAddress(rs.getString("address"));
+				com.setBuild_time(rs.getString("build_time"));
+				com.setBusiness(rs.getString("business"));
+				com.setCredit_code(rs.getString("credit_code"));
+				com.setEnterprises(rs.getString("enterprise"));
+				com.setIcon(rs.getString("icon"));
+				com.setId(rs.getInt("id"));
+				com.setIntroduction(rs.getString("introduction"));
+				com.setName(rs.getString("name"));
+				com.setTotal_people(rs.getInt("total_people"));
+				com.setTotal_value(rs.getDouble("total_value"));
+				list.add(com);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			DBUtils.close(rs, st, conn);
+		}
+		return list;
+	}
 	public static void main(String args[]){
 		CompanyDaoImpl dao=new CompanyDaoImpl();
-		List<enterprise_kind> list=new ArrayList<enterprise_kind>();
+		List<company> list=new ArrayList<company>();
+		List<company> list1=new ArrayList<company>();
+		List<company> list2=new ArrayList<company>();
+		List<company> list3=new ArrayList<company>();
 		try {
-			//dao.GetAllCompany();
-			list=dao.getAllEnterprise_kinds();
+			list=dao.findCompanies("澳门", "旅游", "0", "20");
+			list1=dao.findCompanies("", "旅游", "0", "20");
+			list2=dao.findCompanies("", "", "0", "20");
+			list3=dao.findCompanies("", "", "", "20");
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for(int i=0;i<list.size();i++)
+		
+		for(int i=0;i<list.size();i++) {
 			System.out.println(list.get(i));
+		}
+		System.out.println("--------");
+		for(int i=0;i<list1.size();i++) {
+			System.out.println(list1.get(i));
+		}
+		System.out.println("--------");
+		for(int i=0;i<list2.size();i++) {
+			System.out.println(list2.get(i));
+		}
+		System.out.println("--------");
+		for(int i=0;i<list3.size();i++) {
+			System.out.println(list3.get(i));
+		}
 	}
 }

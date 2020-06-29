@@ -17,7 +17,7 @@
 <label for="inputEmail3" class=" col-form-label">公司地点</label>
 </div>
   <div class="col-2">
-  <select class="custom-select" name="citesInfo">
+  <select class="custom-select" name="place" id="place">
   <option selected>全部</option>
   <option value="北京">北京</option>
   <option value="上海">上海</option>
@@ -69,8 +69,8 @@
 <label for="inputEmail3" class=" col-form-label">行业类型</label>
 </div>
   <div class="col-2">
-  <select class="custom-select" name="enterprises">
-  <option selected>不限</option>
+  <select class="custom-select" name="enterprise" id="enterprise">
+  <option  selected>不限</option>
   <!--
   <option value="1">One</option>
   <option value="2">Two</option>
@@ -78,11 +78,11 @@
   </select>
   </div>
   <div class="col-auto">
-<label for="inputEmail3" class=" col-form-label">公司规模</label>
+<label for="inputEmail3" class=" col-form-label" >公司规模</label>
 </div>
   <div class="col-2">
-  <select class="custom-select" name="total_people">
-  <option selected>不限</option>
+  <select class="custom-select" name="pp" id="pp">
+  <option value="0" selected>不限</option>
   <option value="1">0-20人</option>
   <option value="2">20-99人</option>
   <option value="3">100-499人</option>
@@ -110,14 +110,21 @@
  <div class="card-body"  id="AllCompany">
 </div>
 </div>
+</div>
 <script src="../../bootstrap/js/jquery-3.4.1.min.js"></script>
 <script src="../../bootstrap/js/bootstrap.min.js"></script>
 <script src="../../bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
 //查找
 function LoadHtml(){
-	$.getJSON("../../Fc",function(data){
+	//获取选中下拉框的值
+	var place=$("#place").find("option:selected").val();
+	var enter=$("#enterprise").find("option:selected").val();
+	var total_people=$("#pp").find("option:selected").val();
+	//console.log(place+" "+enter+" "+total_people);
+	$.getJSON("../../Fc?place="+place+"&enterprise="+enter+"&total_people="+total_people,function(data){
 		console.log(data);
+		$("#AllCompany").html("");
 		for(var i=0;i<data.length;i+=3){
 			var str='<div class="row">'
 			for(var j=0;j<3&&i+j<data.length;j++){
@@ -152,7 +159,7 @@ $(function(){
 	$.getJSON("../../EnterpriseKindServlet",function(data){
     	console.info(data);
     	$(data).each(function(index,item){
-    		$("select[name='enterprises']").append("<option value="+item.enterprise+">"+item.enterprise+"</option>");
+    		$("select[name='enterprise']").append("<option value="+item.enterprise+">"+item.enterprise+"</option>");
     	});
     });
 	$.getJSON("../../Tr",function(data){
@@ -300,7 +307,7 @@ $(function(){
     	var text=$(e.target).text();
     	$('#exampleModal').modal('hide');
     	//console.log(text);
-    	$("select[name='citesInfo']").append('<option value='+text+' selected>'+text+'</option>')
+    	$("select[name='place']").append('<option value='+text+' selected>'+text+'</option>')
     })
 	
 	
