@@ -139,6 +139,19 @@ public class CompanyDaoImpl implements CompanyDao   {
 		}
 		return list;
 	}
+	//根据公司id查看公司信息
+	@Override
+	public company getInfoById(String company_id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		Connection connection=DBUtils.getConnection();
+		String sql="select * from company where id="+company_id;
+		PreparedStatement st=null;
+		ResultSet rs=null;
+		company c=new company();
+		
+		return null;
+	}
+	
 	public static void main(String args[]){
 		CompanyDaoImpl dao=new CompanyDaoImpl();
 		List<company> list=new ArrayList<company>();

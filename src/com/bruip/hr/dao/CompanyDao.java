@@ -13,6 +13,7 @@ public interface CompanyDao {
 	public List<enterprise_kind> getAllEnterprise_kinds() throws DataAccessException;
 	//根据公司地点、行业类型、公司规模查找符合公司的信息
 	public List<company> findCompanies(String place,String enterprise,String min,String max) throws DataAccessException;
-	
+	//根据公司id查看公司信息
+	public company getInfoById(String company_id) throws DataAccessException;
 }    
 
